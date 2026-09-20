@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#121017">
+<meta name="description" content="Fatefall is your arcane dice table. Roll every D&D die, build mixed pools, and let the dice tell the story. One file. Works offline.">
+<title>Fatefall — Let the dice tell the story.</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23191423'/%3E%3Cpath d='M32 7 55 21v25L32 58 9 46V21Z M32 7 20 36l12 22 12-22Z M9 21l11 15h24l11-15 M9 46l11-10 M55 46 44 36' fill='none' stroke='%23c3a0fa' stroke-width='2.5'/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:dark;--bg:#121017;--panel:#1b1822;--panel-soft:#201b29;--line:#342c3f;--text:#f4eff8;--muted:#a99eb6;--faint:#807389;--accent:#c3a0fa;--accent-rgb:195,160,250;--gold:#ddba7c;--green:#9fc8ab;--red:#efa19a;--serif:Georgia,'Times New Roman',serif;--sans:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--sans);min-height:100vh;background-image:radial-gradient(ellipse at 70% -15%,rgba(var(--accent-rgb),.075),transparent 55%)}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button,input{color:inherit}button{transition:background .18s,border-color .18s,transform .18s,color .18s}button:disabled{cursor:default;opacity:.38}button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px}button:active:not(:disabled){transform:translateY(1px)}button svg{pointer-events:none}button[hidden],[hidden]{display:none!important}svg{display:block}input{min-width:0}::selection{background:rgba(var(--accent-rgb),.3)}.shell{max-width:1336px;margin:auto;padding:0 40px}.site-header{min-height:104px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:20px}.brand{display:flex;gap:15px;align-items:center}.brand-mark{width:45px;height:49px;color:var(--accent);filter:drop-shadow(0 0 15px rgba(var(--accent-rgb),.22))}.brand-name{font-family:var(--serif);font-size:29px;line-height:1.2;letter-spacing:4px}.brand-subtitle{font-size:9px;letter-spacing:2.2px;color:var(--muted);margin-top:4px}.header-actions{display:flex;align-items:center;gap:9px}.local-note{color:var(--muted);font-size:11px;display:flex;align-items:center;gap:7px;margin-right:16px}.local-note i{width:5px;height:5px;background:var(--green);border-radius:50%;box-shadow:0 0 8px #9fc8ab44}.icon-button{width:38px;height:38px;border:1px solid var(--line);background:transparent;border-radius:9px;display:grid;place-items:center;color:var(--muted)}.icon-button:hover{background:var(--panel-soft);color:var(--text);border-color:var(--faint)}.icon-button[aria-pressed=true]{color:var(--accent);background:rgba(var(--accent-rgb),.08);border-color:rgba(var(--accent-rgb),.3)}.icon-button svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.65;fill:none}.intro{display:flex;justify-content:space-between;align-items:end;gap:20px;padding:32px 0 27px}.intro h1{font-family:var(--serif);font-size:38px;font-weight:400;line-height:1.15;letter-spacing:-1px;margin:0 0 9px}.intro h1 em{color:var(--accent);font-weight:400}.intro p{margin:0;color:var(--muted);font-size:12px}.intro-aside{color:var(--faint);font-size:10px;letter-spacing:1.7px;display:flex;align-items:center;gap:10px;padding-bottom:4px}.star{color:var(--gold);font-size:20px}.workbench{display:grid;grid-template-columns:310px minmax(0,1fr);gap:22px;align-items:start}.panel{border:1px solid var(--line);border-radius:15px;background:var(--panel);overflow:hidden}.controls{padding:21px}.eyebrow{font-size:10px;font-weight:650;letter-spacing:1.7px;text-transform:uppercase;color:var(--muted)}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:17px}.section-title h2{font-size:12px;font-weight:600;margin:0;letter-spacing:.15px}.section-title span{color:var(--faint);font-size:10px}.mode-tabs{display:flex;padding:4px;background:#121017;border:1px solid #2b2433;border-radius:9px;margin-bottom:14px;gap:4px}.mode-tabs button{flex:1;background:transparent;border:0;border-radius:6px;padding:8px 6px;color:var(--muted);font-size:12px}.mode-tabs button[aria-pressed=true]{color:var(--text);background:#302639;box-shadow:0 1px 4px #0004}.picker-note{font-size:11px;color:var(--muted);margin:0 0 13px;min-height:17px}.dice-picker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.die-button{height:77px;padding:9px 3px 7px;border:1px solid var(--line);border-radius:9px;background:#201b29;color:var(--muted);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.die-button svg{width:30px;height:32px;stroke-width:1.3}.die-button .die-name{font-size:11px;font-weight:600}.die-button:hover{color:var(--accent);background:rgba(var(--accent-rgb),.09);border-color:rgba(var(--accent-rgb),.45);transform:translateY(-2px)}.die-button.selected{color:var(--accent);border-color:rgba(var(--accent-rgb),.65);background:rgba(var(--accent-rgb),.095)}.die-count{position:absolute;right:5px;top:4px;font-size:9px;line-height:16px;min-width:16px;padding:0 3px;background:var(--accent);color:#251737;border-radius:5px;font-weight:750}.clear-dice{font-size:10px;gap:7px;color:var(--faint);background:transparent;border-style:dashed}.clear-dice svg{width:20px;height:20px}.config-line{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:19px}.field-label{display:block;font-size:10px;letter-spacing:.35px;color:var(--muted);margin-bottom:7px}.stepper{display:flex;height:38px;align-items:center;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#15111b}.stepper button{border:0;background:transparent;color:var(--muted);width:31px;align-self:stretch;font-size:18px;flex-shrink:0}.stepper button:hover{color:var(--accent);background:#ffffff07}.stepper input{width:100%;appearance:textfield;-moz-appearance:textfield;border:0;background:transparent;text-align:center;font-size:13px;font-variant-numeric:tabular-nums;padding:4px 0;outline-offset:-2px}.stepper input::-webkit-inner-spin-button,.stepper input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.pool-summary{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;min-height:33px}.pool-chip{border:1px solid var(--line);border-radius:6px;background:#15111b;display:flex;align-items:center;font-size:11px;color:var(--accent);overflow:hidden}.pool-chip span{padding:5px 7px}.pool-chip button{border:0;background:#ffffff04;padding:4px 8px;color:var(--muted);height:100%}.empty-pool{font-size:11px;color:var(--muted);padding:7px 0}.roll-options{margin-top:19px}.advantage{display:flex;gap:4px}.advantage button{flex:1;padding:8px 3px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--muted);font-size:10px}.advantage button[aria-pressed=true]{color:var(--accent);background:rgba(var(--accent-rgb),.09);border-color:rgba(var(--accent-rgb),.45)}.option-note{font-size:10px;color:var(--muted);margin:7px 0 0;min-height:15px}.primary-roll{display:flex;justify-content:center;align-items:center;gap:10px;width:100%;margin-top:20px;min-height:50px;background:var(--accent);border:1px solid #e5d4ff55;color:#241633;border-radius:8px;font-size:13px;font-weight:700;box-shadow:0 3px 18px rgba(var(--accent-rgb),.1);position:relative}.primary-roll:hover{filter:brightness(1.08);box-shadow:0 4px 24px rgba(var(--accent-rgb),.2)}.primary-roll svg{width:20px;height:20px;flex-shrink:0}.primary-roll kbd{font-family:var(--sans);font-size:9px;font-weight:500;border:1px solid #24163344;border-radius:4px;padding:1px 5px;margin-left:auto;color:#463451}.primary-roll #roll-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:184px}.primary-roll:has(kbd){padding:0 13px}.roll-again-note{text-align:center;font-size:10px;color:var(--faint);margin:9px 0 0}.custom-roll{border-top:1px solid var(--line);padding-top:17px;margin-top:20px}.formula-row{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#15111b;min-height:39px}.formula-row:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px rgba(var(--accent-rgb),.07)}.formula-row input{flex:1;width:100%;border:0;background:transparent;padding:8px 10px;outline:none;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px}.formula-row input::placeholder{color:var(--faint)}.formula-row button{border:0;border-left:1px solid var(--line);background:#ffffff04;width:35px;color:var(--accent);display:grid;place-items:center}.formula-row button svg{width:16px;height:16px}.error{color:var(--red);font-size:11px;margin:8px 0 0}.preset-panel{margin-top:16px;padding:18px 20px}.preset-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.preset{display:flex;flex-direction:column;text-align:left;gap:2px;border:1px solid var(--line);border-radius:7px;background:transparent;padding:9px 10px;color:var(--text);font-size:11px}.preset small{font-size:10px;color:var(--muted)}.preset:hover{border-color:rgba(var(--accent-rgb),.5);background:rgba(var(--accent-rgb),.05)}.table-column{min-width:0}.arena{height:466px;position:relative;isolation:isolate;background:radial-gradient(ellipse at 50% 40%,#33244177,transparent 65%),#19151f}.arena:after{content:'';pointer-events:none;position:absolute;inset:8px;border:1px solid #c3a0fa09;border-radius:10px;z-index:-1}.table-top{position:absolute;top:22px;left:24px;right:24px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:2}.table-label{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:9px;letter-spacing:1.5px}.table-label i{width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.75}.palette{display:flex;align-items:center;gap:7px}.palette button{background:var(--swatch);width:12px;height:12px;border-radius:50%;border:2px solid var(--panel);outline:1px solid transparent;padding:0;opacity:.6}.palette button:hover,.palette button[aria-pressed=true]{outline-color:var(--swatch);opacity:1}.palette .palette-label{font-size:9px;color:var(--faint);margin-right:4px}.canvas-wrap{position:absolute;inset:0;z-index:0}#dice-canvas{width:100%;height:100%;display:block}.canvas-fallback{padding:100px 30px;text-align:center;color:var(--muted)}.result{position:absolute;bottom:29px;left:26px;right:26px;text-align:center;pointer-events:none;z-index:1}.result-caption{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);min-height:15px}.result-value{font-family:var(--serif);font-size:73px;font-weight:400;line-height:1.06;color:var(--text);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-3px;margin:3px 0 7px}.result-value.idle{color:var(--accent);opacity:.4;font-size:59px;line-height:1.32}.result-value.natural20{color:var(--gold);text-shadow:0 0 34px #ddba7c44}.result-value.natural1{color:var(--red)}.result-detail{font-size:11px;color:var(--muted);min-height:19px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px;max-height:60px;overflow-y:auto;pointer-events:auto;scrollbar-width:thin}.result-detail .face-result{padding:2px 7px;border:1px solid #ffffff0a;border-radius:4px;background:#ffffff04;color:#d6cadf;font-variant-numeric:tabular-nums;cursor:default}.result-detail .face-result.dropped{color:var(--faint);text-decoration:line-through;border-style:dashed;background:transparent}.result-detail .mod-result{color:var(--accent);font-weight:600;margin-left:4px}.natural-badge{position:absolute;top:62px;left:50%;transform:translateX(-50%);border:1px solid #ddba7c55;border-radius:99px;background:#342a22dd;color:var(--gold);font-size:10px;padding:5px 13px;letter-spacing:1px;z-index:2;white-space:nowrap}.natural-badge.low{border-color:#efa19a44;background:#332121dd;color:var(--red)}.rolling-progress{height:2px;background:var(--accent);opacity:.6;position:absolute;bottom:0;left:0;width:100%;transform:scaleX(0);transform-origin:left}.table-actions{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 3px;min-height:28px}.table-hint{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px}.table-hint svg{width:12px;height:12px;flex-shrink:0}.quiet-button{border:0;background:transparent;color:var(--muted);font-size:11px;padding:4px 6px;display:flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap}.quiet-button:hover{color:var(--accent)}.quiet-button svg{width:13px;height:13px}.history-panel{margin-top:18px}.history-header{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-bottom:1px solid var(--line)}.history-header h2{margin:0;font-size:12px;font-weight:500;display:flex;align-items:center;gap:8px}.history-count{font-size:10px;color:var(--faint);background:#ffffff05;padding:1px 6px;border-radius:4px}.history-actions{display:flex;align-items:center;gap:9px}.history-actions .quiet-button{font-size:10px}.history-list{max-height:202px;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.history-empty{padding:28px 20px 30px;display:flex;align-items:center;justify-content:center;gap:14px;color:var(--muted)}.history-empty svg{color:var(--faint);width:25px;height:25px;opacity:.65}.history-empty strong{display:block;font-size:12px;font-weight:450;color:#b7aabe}.history-empty p{font-size:10px;margin:4px 0 0;color:var(--faint)}.history-row{width:100%;display:grid;grid-template-columns:32px minmax(0,1fr) 64px 42px;gap:10px;align-items:center;text-align:left;border:0;border-bottom:1px solid #342c3f80;background:transparent;padding:13px 20px;color:var(--text)}.history-row:last-child{border:0}.history-row:hover{background:rgba(var(--accent-rgb),.04)}.history-icon{width:28px;height:29px;color:var(--accent);opacity:.7}.history-main{min-width:0}.history-expression{display:block;font-size:12px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.history-breakdown{display:block;font-size:10px;color:var(--muted);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-top:2px}.history-time{font-size:10px;color:var(--faint);text-align:right}.history-total{font-family:var(--serif);font-size:23px;text-align:right;font-variant-numeric:tabular-nums}.history-row.nat20 .history-total{color:var(--gold)}.history-row.nat1 .history-total{color:var(--red)}.history-footer{border-top:1px solid var(--line);color:var(--faint);font-size:9px;padding:10px 20px;display:flex;justify-content:space-between;gap:12px}.footer{padding:25px 0 22px;display:flex;justify-content:space-between;align-items:center;gap:15px;color:var(--faint);font-size:10px}.footer-brand{display:flex;gap:7px;align-items:center}.footer-brand span{font-family:var(--serif);font-size:14px;color:var(--gold)}kbd{border:1px solid var(--line);border-radius:4px;padding:1px 5px;font:10px var(--sans);color:var(--muted)}.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,15px);max-width:calc(100% - 32px);background:#302639;border:1px solid #675277;color:var(--text);padding:11px 17px;border-radius:9px;box-shadow:0 10px 35px #0005;font-size:12px;z-index:20;opacity:0;pointer-events:none;transition:.2s}.toast.visible{opacity:1;transform:translate(-50%,0);pointer-events:auto}.toast button{border:0;background:transparent;color:var(--accent);margin-left:13px;font-size:12px;text-decoration:underline}dialog{padding:28px;color:var(--text);background:var(--panel);border:1px solid #554263;border-radius:16px;max-width:490px;width:calc(100% - 32px);max-height:calc(100dvh - 40px);box-shadow:0 20px 120px #000a}dialog::backdrop{background:#08060ebd;backdrop-filter:blur(5px)}.dialog-top{display:flex;justify-content:space-between;align-items:center;gap:20px}.dialog-top h2{font-family:var(--serif);font-size:28px;font-weight:400;margin:0}dialog p,dialog li{font-size:12px;color:var(--muted);line-height:1.8}dialog strong{color:var(--text);font-weight:500}dialog h3{font-size:12px;font-weight:650;letter-spacing:.3px;color:var(--accent);margin:22px 0 7px}dialog ul{padding-left:19px}dialog code{color:var(--accent);background:#ffffff05;padding:2px 5px;border-radius:4px;font-size:11px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.reveal{animation:reveal .4s cubic-bezier(.16,1,.3,1)}@keyframes reveal{from{transform:translateY(9px) scale(.9);opacity:.15}to{transform:translateY(0) scale(1);opacity:1}}.rolling .result-value{font-size:52px;line-height:1.48;letter-spacing:5px;color:var(--accent)}body.reduced-motion *,body.reduced-motion *:before,body.reduced-motion *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(min-width:1400px){.shell{padding:0 50px}.workbench{grid-template-columns:318px minmax(0,1fr);gap:24px}.arena{height:476px}.intro{padding-top:35px;padding-bottom:30px}}
+@media(max-width:1000px){.shell{padding:0 24px}.workbench{grid-template-columns:282px minmax(0,1fr);gap:16px}.controls{padding:17px}.die-button{height:71px}.intro-aside{display:none}.table-top{left:20px;right:20px}.table-label{letter-spacing:1px;font-size:8px}.palette-label{display:none}.primary-roll kbd{display:none}.primary-roll #roll-label{max-width:210px}.history-row{padding:12px 15px;grid-template-columns:26px minmax(0,1fr) 51px 38px;gap:8px}.history-icon{width:24px}.history-footer{padding:10px 15px;font-size:8px}.local-note{margin-right:6px}}
+@media(max-width:720px){.shell{padding:0 17px}.site-header{min-height:86px}.brand{gap:9px}.brand-mark{width:34px;height:39px}.brand-name{font-size:23px;letter-spacing:3px}.brand-subtitle{font-size:7px;letter-spacing:1.4px}.header-actions{gap:6px}.icon-button{height:34px;width:34px}.local-note{display:none}.intro{padding:25px 0 21px}.intro h1{font-size:33px}.intro p{font-size:11px}.workbench{display:flex;flex-direction:column;gap:18px}.sidebar,.table-column{width:100%}.sidebar{display:contents}.controls{width:100%;order:1;padding:17px}.table-column{order:2}.preset-panel{order:3;width:100%;margin:0}.section-title{margin-bottom:13px}.dice-picker{grid-template-columns:repeat(8,minmax(0,1fr));gap:5px}.die-button{height:65px;gap:3px;border-radius:7px}.die-button svg{width:25px;height:28px}.die-button .die-name{font-size:10px}.clear-dice{font-size:8px}.clear-dice svg{width:17px}.mode-tabs{margin-bottom:11px}.picker-note{margin-bottom:10px}.config-line{margin-top:16px;gap:16px}.roll-options{margin-top:14px}.option-note{margin-top:5px}.primary-roll{margin-top:14px}.primary-roll kbd{display:inline;margin-left:5px}.custom-roll{padding-top:13px;margin-top:14px}.roll-again-note{display:none}.arena{height:425px}.table-top{top:20px;left:19px;right:19px}.table-label{font-size:9px}.palette button{width:13px;height:13px}.table-actions{margin-top:9px}.result{bottom:23px;left:17px;right:17px}.result-value{font-size:66px}.result-caption{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:9px}.history-panel{margin-top:14px}.preset-grid{grid-template-columns:repeat(4,1fr)}.preset{padding:9px 7px;font-size:10px}.preset small{font-size:9px}.footer{padding:23px 0;font-size:9px}.history-list{max-height:223px}.history-footer{font-size:9px}.history-row{grid-template-columns:28px minmax(0,1fr) 57px 38px}.toast{bottom:18px;white-space:normal}.pool-summary{margin-top:10px}}
+@media(max-width:390px){.shell{padding:0 12px}.header-actions{gap:4px}.icon-button{width:31px;height:31px}.brand-name{font-size:21px}.brand-subtitle{letter-spacing:1px}.controls{padding:14px}.dice-picker{gap:4px}.die-button svg{width:22px}.die-count{right:2px;top:2px;font-size:8px;min-width:13px;line-height:13px}.table-label{font-size:8px}.footer{flex-direction:column;align-items:center;gap:7px}.table-hint{font-size:9px}.quiet-button{font-size:10px}.history-footer{font-size:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-d4" viewBox="0 0 40 44"><path d="M20 3 38 36 3 36Z M20 3v23L3 36m17-10 18 10"/></symbol>
+<symbol id="i-d6" viewBox="0 0 40 44"><path d="m20 3 17 10v20L20 43 3 33V13Z M3 13l17 10 17-10M20 23v20"/></symbol>
+<symbol id="i-d8" viewBox="0 0 40 44"><path d="m20 2 18 21-18 19L2 23Z M20 2l7 24-7 16-7-16Z M2 23l11 3h14l11-3"/></symbol>
+<symbol id="i-d10" viewBox="0 0 40 44"><path d="m20 2 18 23-18 17L2 25Z M20 2l8 24-8 16-8-16Z M2 25l10 1 8-5 8 5 10-1M20 2v19"/></symbol>
+<symbol id="i-d12" viewBox="0 0 40 44"><path d="m20 2 16 9 3 20-19 12L1 31l3-20Z M20 11l11 8-4 13H13L9 19Z M20 2v9M4 11l5 8m27-8-5 8M1 31l12 1m26-1-12 1m-7 11-7-11m7 11 7-11"/></symbol>
+<symbol id="i-d20" viewBox="0 0 40 44"><path d="m20 2 18 10v21L20 43 2 33V12Z M20 2 11 28l9 15 9-15Z M2 12l9 16h18l9-16M2 33l9-5m27 5-9-5M2 12h36"/></symbol>
+<symbol id="i-d100" viewBox="0 0 40 44"><path d="m14 3 12 18-12 12L2 21Z M14 3l5 19-5 11-5-11Z M26 13l12 18-12 12-12-12M26 13l5 19-5 11-5-11"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2.6 7M3 4v7h7"/></symbol>
+<symbol id="i-sound" viewBox="0 0 24 24"><path d="M11 4 6 8H3v8h3l5 4Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+<symbol id="i-mute" viewBox="0 0 24 24"><path d="M11 4 6 8H3v8h3l5 4Zm5 5 6 6m0-6-6 6"/></symbol>
+<symbol id="i-motion" viewBox="0 0 24 24"><path d="m14 4 7 8-7 8M6 5l6 7-6 7M2 12h5"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .5-1.5 1-1.5 3m0 3v.1"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+</defs></svg>
+<div class="shell">
+<header class="site-header">
+ <div class="brand"><svg class="brand-mark" fill="none" stroke="currentColor" stroke-width="1.15" aria-hidden="true"><use href="#i-d20"/></svg><div><div class="brand-name">FATEFALL</div><div class="brand-subtitle">THE ADVENTURER’S DICE TABLE</div></div></div>
+ <div class="header-actions"><div class="local-note"><i></i>Adventure, uninterrupted.</div><button class="icon-button" id="sound-toggle" type="button" aria-label="Enable dice sounds" aria-pressed="false" title="Sound off"><svg><use href="#i-mute"/></svg></button><button class="icon-button" id="motion-toggle" type="button" aria-label="Enable reduced motion" aria-pressed="false" title="Full animation"><svg><use href="#i-motion"/></svg></button><button class="icon-button" id="help-button" type="button" aria-label="How to use Fatefall" title="How to play"><svg><use href="#i-help"/></svg></button></div>
+</header>
+<div class="intro"><div><h1>Leave it to <em>fate.</em></h1><p>Every great story starts with a roll.</p></div><div class="intro-aside"><span class="star">✧</span> A LITTLE CHANCE. A LOT OF ADVENTURE.</div></div>
+<main class="workbench">
+<aside class="sidebar" aria-label="Dice controls">
+<section class="panel controls">
+ <div class="section-title"><h2>Your dice, your destiny.</h2><span>01 — 100</span></div>
+ <div class="mode-tabs" role="group" aria-label="Dice selection mode"><button id="quick-tab" type="button" aria-pressed="true">Quick roll</button><button id="pool-tab" type="button" aria-pressed="false">Build a pool</button></div>
+ <p class="picker-note" id="picker-note">Tap a die to roll instantly.</p>
+ <div class="dice-picker" id="dice-picker"></div>
+ <div class="pool-summary" id="pool-summary" hidden></div>
+ <div class="config-line"><div id="quantity-field"><label class="field-label" for="quantity">Quantity</label><div class="stepper"><button type="button" data-step="quantity:-1" aria-label="Remove one die">−</button><input id="quantity" type="number" min="1" max="30" step="1" value="1" inputmode="numeric" aria-label="Dice quantity"><button type="button" data-step="quantity:1" aria-label="Add one die">+</button></div></div><div><label class="field-label" for="modifier">Modifier</label><div class="stepper"><button type="button" data-step="modifier:-1" aria-label="Decrease modifier">−</button><input id="modifier" type="number" min="-999" max="999" step="1" value="0" inputmode="text" aria-label="Total roll modifier"><button type="button" data-step="modifier:1" aria-label="Increase modifier">+</button></div></div></div>
+ <div class="roll-options"><span class="field-label">D20 roll mode</span><div class="advantage" role="group" aria-label="D20 roll mode"><button type="button" data-adv="normal" aria-pressed="true">Normal</button><button type="button" data-adv="advantage" aria-pressed="false">Advantage</button><button type="button" data-adv="disadvantage" aria-pressed="false">Disadvantage</button></div><p class="option-note" id="option-note">One d20. Endless possibilities.</p></div>
+ <button class="primary-roll" id="roll-button" type="button"><svg fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><use href="#i-d20"/></svg><span id="roll-label">Roll 1d20</span><kbd>Space</kbd></button><p class="roll-again-note">Or press <kbd>R</kbd> to roll your current dice.</p>
+ <form class="custom-roll" id="formula-form" novalidate><label class="field-label" for="formula">Have something specific in mind?</label><div class="formula-row"><input id="formula" type="text" placeholder="2d6 + 1d8 + 3" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="150" aria-describedby="formula-error"><button type="submit" title="Roll expression" aria-label="Roll dice expression"><svg fill="none" stroke="currentColor" stroke-width="1.8"><use href="#i-arrow"/></svg></button></div><p id="formula-error" class="error" role="alert" hidden></p></form>
+</section>
+<section class="panel preset-panel"><div class="section-title"><h2>Ready for anything.</h2><span>QUICK PRESETS</span></div><div class="preset-grid"><button class="preset" type="button" data-preset="1d20"><span>Ability check</span><small>1d20</small></button><button class="preset" type="button" data-preset="2d6"><span>Greatsword</span><small>2d6</small></button><button class="preset" type="button" data-preset="2d4+2"><span>Healing potion</span><small>2d4 + 2</small></button><button class="preset" type="button" data-preset="8d6"><span>Fireball</span><small>8d6</small></button></div></section>
+</aside>
+<div class="table-column">
+<section class="panel arena" id="arena" aria-label="Animated dice table" aria-busy="false">
+ <div class="table-top"><div class="table-label"><i></i><span id="table-status">THE TABLE IS YOURS</span></div><div class="palette" role="group" aria-label="Dice color"><span class="palette-label">DICE COLOR</span><button type="button" data-color="amethyst" style="--swatch:#c3a0fa" aria-label="Amethyst dice" title="Amethyst" aria-pressed="true"></button><button type="button" data-color="ember" style="--swatch:#efaf88" aria-label="Ember dice" title="Ember" aria-pressed="false"></button><button type="button" data-color="jade" style="--swatch:#9dd3bd" aria-label="Jade dice" title="Jade" aria-pressed="false"></button></div></div>
+ <div class="canvas-wrap"><canvas id="dice-canvas" aria-hidden="true"><p class="canvas-fallback">Dice results appear below the rolling table.</p></canvas></div>
+ <div id="natural-badge" class="natural-badge" hidden></div>
+ <div class="result"><div class="result-caption" id="result-caption">LET THE DICE TELL THE STORY</div><div class="result-value idle" id="result-value">—</div><div class="result-detail" id="result-detail">Your next adventure is one roll away.</div></div>
+ <div class="rolling-progress" id="rolling-progress"></div>
+</section>
+<div class="table-actions"><div class="table-hint"><svg fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><use href="#i-check"/></svg><span id="table-hint">All the dice. None of the table flipping.</span></div><button class="quiet-button" id="copy-result" type="button" disabled><svg fill="none" stroke="currentColor" stroke-width="1.7"><use href="#i-copy"/></svg>Copy result</button></div>
+<section class="panel history-panel" aria-label="Roll history"><div class="history-header"><h2>The chronicle <span class="history-count" id="history-count">0</span></h2><div class="history-actions"><button class="quiet-button" id="clear-history" type="button" disabled>Clear history</button></div></div><div class="history-list" id="history-list"></div><div class="history-footer"><span id="storage-note">Your last 50 rolls, saved in this browser.</span><span>Click a past roll to reroll it.</span></div></section>
+</div>
+</main>
+<footer class="footer"><div class="footer-brand"><span>✧</span> May your rolls be high and your stories legendary.</div><div>Works offline. No account. Just dice.</div></footer>
+</div>
+<div class="sr-only" role="status" aria-live="polite" aria-atomic="true" id="roll-announcement"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="help-dialog" aria-labelledby="help-title"><div class="dialog-top"><h2 id="help-title">Welcome to Fatefall.</h2><button class="icon-button" id="close-help" type="button" aria-label="Close help"><svg><use href="#i-close"/></svg></button></div><p>A little magic for your next session. Every roll happens right here in your browser, even offline.</p><h3>Make your roll</h3><ul><li><strong>Quick roll:</strong> choose a quantity and modifier, then tap a die. The large Roll button repeats your current setup.</li><li><strong>Build a pool:</strong> tap dice to add them. Use the small minus buttons to remove dice, then roll the whole pool. The modifier applies once to the total.</li><li><strong>Advantage / disadvantage:</strong> available for a single d20. Roll two and keep the higher or lower result. Ties keep one die.</li></ul><h3>Speak the language of dice</h3><p>Try <code>2d6 + 1d8 + 3</code>, <code>d20 - 2</code>, <code>2d20kh1 + 5</code> (keep highest), or <code>4d6kh3</code> (ability score). Use <code>kl</code> to keep the lowest. Up to 30 dice per roll; modifiers from −999 to +999.</p><h3>The fine print of fate</h3><p>A d100 is rolled as two ten-sided dice: tens and units. <strong>00 + 0 means 100.</strong> Other pairs read normally; 00 + 7 means 7. Natural 1 and 20 badges use the kept die of a single-d20 check, before modifiers. Your table decides what they mean.</p><p>The presets are ready-made dice formulas. Apply any character bonuses or other rules that your table uses.</p><h3>Stay in the moment</h3><p><kbd>Space</kbd> / <kbd>R</kbd> roll the current setup. <kbd>1</kbd>–<kbd>7</kbd> quick-roll d4, d6, d8, d10, d12, d20, and d100. Sound is optional. Reduced motion skips the animation.</p><p>Dice use your browser’s secure random generator with equal chances for each face. The animation reveals the result; it doesn’t decide it. History and preferences stay in this browser when storage is available.</p></dialog>
+<script>
+'use strict';
+/* Fatefall — all code, artwork, animation and sound are embedded in this file. */
+const $ = id => document.getElementById(id);
+const SIDES = [4, 6, 8, 10, 12, 20, 100];
+const MAX_DICE = 30;
+const STORE_KEY = 'fatefall.v1';
+const THEMES = {
+  amethyst: { hex: '#c3a0fa', rgb: [195,160,250], base: [68,39,104] },
+  ember: { hex: '#efaf88', rgb: [239,175,136], base: [105,53,39] },
+  jade: { hex: '#9dd3bd', rgb: [157,211,189], base: [31,85,71] }
+};
+const mediaMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let canStore = true, stored = {};
+try { stored = JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; }
+catch (_) { canStore = false; }
+const state = {
+  selection: 'quick', sides: 20, quantity: 1, modifier: 0,
+  advantage: 'normal', pool: null, busy: false, last: null,
+  color: Object.hasOwn(THEMES, stored.color) ? stored.color : 'amethyst',
+  sound: stored.sound === true,
+  reduced: typeof stored.reduced === 'boolean' ? stored.reduced : mediaMotion.matches,
+  history: []
+};
+let toastTimer, undoHistory = null;
+const copyTerms = terms => terms.map(t => ({...t}));
+const countDice = terms => terms.reduce((n, t) => n + t.count, 0);
+const termText = t => `${t.count}d${t.sides}${t.keep ? t.keep + t.keepCount : ''}`;
+const formatSpec = spec => spec.terms.map(termText).join(' + ') + (spec.modifier ? ` ${spec.modifier > 0 ? '+' : '−'} ${Math.abs(spec.modifier)}` : '');
+
+function parseExpression(input) {
+  if (typeof input !== 'string' || input.length > 150) throw new Error('Keep your expression under 150 characters.');
+  const text = input.trim().toLowerCase().replaceAll('−','-').replace(/\s+/g,'');
+  if (!text) throw new Error('Enter a roll, such as 2d6 + 3.');
+  const parts = text.match(/[+-]?[^+-]+/g);
+  if (!parts || parts.join('') !== text) throw new Error('Use dice and + or − modifiers, such as 2d6 + 3.');
+  const terms = [];
+  let modifier = 0;
+  for (let part of parts) {
+    let sign = 1;
+    if (part[0] === '+' || part[0] === '-') { sign = part[0] === '-' ? -1 : 1; part = part.slice(1); }
+    const die = part.match(/^(\d*)d(4|6|8|10|12|20|100)(?:(kh|kl)(\d+))?$/);
+    if (die) {
+      if (sign < 0) throw new Error('Subtract a flat modifier; dice must be added to the pool.');
+      const count = die[1] ? Number(die[1]) : 1;
+      if (!Number.isSafeInteger(count) || count < 1 || count > MAX_DICE) throw new Error('Use between 1 and 30 dice per roll.');
+      const term = {count, sides: Number(die[2])};
+      if (die[3]) {
+        const keepCount = Number(die[4]);
+        if (!Number.isSafeInteger(keepCount) || keepCount < 1 || keepCount > count) throw new Error('The number kept must be between 1 and the number rolled.');
+        term.keep = die[3]; term.keepCount = keepCount;
+      }
+      terms.push(term);
+    } else if (/^\d+$/.test(part)) {
+      const number = Number(part);
+      if (!Number.isSafeInteger(number) || number > 999) throw new Error('Each modifier must be between −999 and +999.');
+      modifier += sign * number;
+    } else throw new Error('Use d4, d6, d8, d10, d12, d20 or d100. Example: 2d6 + 3.');
+  }
+  if (!terms.length) throw new Error('Add at least one die to your expression.');
+  if (countDice(terms) > MAX_DICE) throw new Error('The table holds up to 30 dice per roll.');
+  if (Math.abs(modifier) > 999) throw new Error('The total modifier must be between −999 and +999.');
+  return {terms, modifier};
+}
+
+// Rejection sampling avoids modulo bias: every possible face is equally likely.
+function randomInt(sides) {
+  if (!globalThis.crypto?.getRandomValues) throw new Error('This browser cannot generate secure rolls. Try a current browser.');
+  const bucket = new Uint32Array(1);
+  const limit = Math.floor(4294967296 / sides) * sides;
+  do { crypto.getRandomValues(bucket); } while (bucket[0] >= limit);
+  return bucket[0] % sides + 1;
+}
+
+function calculate(spec, next = randomInt) {
+  let total = spec.modifier;
+  const groups = spec.terms.map(term => {
+    const values = Array.from({length: term.count}, () => {
+      const value = next(term.sides);
+      if (!Number.isInteger(value) || value < 1 || value > term.sides) throw new Error('Invalid dice result.');
+      return value;
+    });
+    const kept = Array(term.count).fill(true);
+    if (term.keep) {
+      kept.fill(false);
+      values.map((value, i) => ({value, i})).sort((a,b) =>
+        (term.keep === 'kh' ? b.value - a.value : a.value - b.value) || a.i - b.i
+      ).slice(0, term.keepCount).forEach(item => { kept[item.i] = true; });
+    }
+    total += values.reduce((sum, value, i) => sum + (kept[i] ? value : 0), 0);
+    return {term: {...term}, values, kept};
+  });
+  const t = spec.terms[0];
+  const check = spec.terms.length === 1 && t.sides === 20 && (t.count === 1 || (t.count === 2 && t.keepCount === 1));
+  const natural = check ? groups[0].values[groups[0].kept.indexOf(true)] : null;
+  return {spec: {terms: copyTerms(spec.terms), modifier: spec.modifier}, formula: formatSpec(spec), total, groups, natural, timestamp: Date.now()};
+}
+
+function currentSpec() {
+  let terms = state.selection === 'quick' ? [{count: state.quantity, sides: state.sides}] : copyTerms(state.pool || []);
+  if (terms.length === 1 && terms[0].sides === 20 && terms[0].count === 1 && state.advantage !== 'normal') {
+    terms[0] = {count: 2, sides: 20, keep: state.advantage === 'advantage' ? 'kh' : 'kl', keepCount: 1};
+  }
+  return {terms, modifier: state.modifier};
+}
+
+function canAdvantage() {
+  const terms = state.selection === 'quick' ? [{count: state.quantity, sides: state.sides}] : state.pool || [];
+  return terms.length === 1 && terms[0].count === 1 && terms[0].sides === 20 && !terms[0].keep;
+}
+
+function applySpec(spec) {
+  state.modifier = spec.modifier;
+  const term = spec.terms[0];
+  const adv = spec.terms.length === 1 && term.sides === 20 && term.count === 2 && term.keepCount === 1;
+  state.advantage = adv ? (term.keep === 'kh' ? 'advantage' : 'disadvantage') : 'normal';
+  if (spec.terms.length === 1 && (!term.keep || adv)) {
+    state.selection = 'quick'; state.sides = term.sides; state.quantity = adv ? 1 : term.count;
+    state.pool = null;
+  } else { state.selection = 'pool'; state.pool = copyTerms(spec.terms); }
+  renderControls();
+}
+
+function save() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify({color: state.color, sound: state.sound, reduced: state.reduced,
+      history: state.history.map(item => ({formula: item.formula, timestamp: item.timestamp, values: item.groups.flatMap(g => g.values)}))}));
+  } catch (_) { canStore = false; }
+  $('storage-note').textContent = canStore ? 'Your last 50 rolls, saved in this browser.' : 'History is available for this session only.';
+}
+
+if (Array.isArray(stored.history)) {
+  for (const item of stored.history.slice(0,50)) {
+    try {
+      const spec = parseExpression(item.formula);
+      if (!Array.isArray(item.values) || item.values.length !== countDice(spec.terms) || !Number.isFinite(item.timestamp) || Number.isNaN(new Date(item.timestamp).getTime())) continue;
+      let i = 0;
+      const result = calculate(spec, () => item.values[i++]);
+      result.timestamp = item.timestamp;
+      state.history.push(result);
+    } catch (_) { /* Ignore malformed or obsolete history without interrupting play. */ }
+  }
+}
+
+function toast(message, undo = false) {
+  clearTimeout(toastTimer);
+  $('toast').textContent = message;
+  if (undo) {
+    const button = document.createElement('button');
+    button.type = 'button'; button.textContent = 'Undo';
+    button.onclick = () => {
+      if (undoHistory) { state.history = [...state.history, ...undoHistory].sort((a,b)=>b.timestamp-a.timestamp).slice(0,50); undoHistory = null; renderHistory(); save(); }
+      $('toast').classList.remove('visible');
+    };
+    $('toast').append(button);
+  }
+  $('toast').classList.add('visible');
+  toastTimer = setTimeout(() => $('toast').classList.remove('visible'), undo ? 8000 : 3500);
+}
+
+function makeIcon(name, className = '') {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('fill','none'); svg.setAttribute('stroke','currentColor'); svg.setAttribute('stroke-width','1.3'); svg.setAttribute('aria-hidden','true');
+  if (className) svg.setAttribute('class', className);
+  const use = document.createElementNS('http://www.w3.org/2000/svg','use');
+  use.setAttribute('href', '#i-' + name); svg.append(use); return svg;
+}
+
+SIDES.forEach((sides, index) => {
+  const button = document.createElement('button');
+  button.className = 'die-button'; button.type = 'button'; button.dataset.die = sides;
+  button.append(makeIcon('d' + sides));
+  const name = document.createElement('span'); name.className = 'die-name'; name.textContent = 'd' + sides;
+  const badge = document.createElement('span'); badge.className = 'die-count'; badge.hidden = true;
+  button.append(name, badge);
+  button.title = `d${sides} · Shortcut ${index + 1}`;
+  button.addEventListener('click', () => chooseDie(sides));
+  $('dice-picker').append(button);
+});
+const clearDiceButton = document.createElement('button');
+clearDiceButton.type = 'button'; clearDiceButton.className = 'die-button clear-dice'; clearDiceButton.id = 'clear-dice';
+clearDiceButton.append(makeIcon('reset')); const clearLabel = document.createElement('span'); clearLabel.textContent = 'Reset'; clearDiceButton.append(clearLabel);
+clearDiceButton.addEventListener('click', () => {
+  state.modifier = 0; state.advantage = 'normal'; state.quantity = 1;
+  if (state.selection === 'pool') state.pool = []; else state.sides = 20;
+  $('formula').value = ''; $('formula-error').hidden = true; $('formula').removeAttribute('aria-invalid'); renderControls();
+});
+$('dice-picker').append(clearDiceButton);
+
+function chooseDie(sides, forceQuick = false) {
+  if (state.busy) return;
+  if (state.selection === 'pool' && !forceQuick) {
+    const pool = state.pool || (state.pool = []);
+    if (countDice(pool) >= MAX_DICE) { toast('The table holds up to 30 dice.'); return; }
+    const existing = pool.find(t => t.sides === sides && !t.keep);
+    if (existing) existing.count++; else pool.push({count:1, sides});
+    if (!canAdvantage()) state.advantage = 'normal';
+    renderControls();
+  } else {
+    state.selection = 'quick'; state.sides = sides;
+    if (!canAdvantage()) state.advantage = 'normal';
+    renderControls(); roll(currentSpec());
+  }
+}
+
+function renderControls() {
+  const quick = state.selection === 'quick';
+  const spec = currentSpec();
+  const advAllowed = canAdvantage();
+  document.querySelectorAll('.controls button, .controls input, .preset, .history-row').forEach(el => { el.disabled = state.busy; });
+  $('quick-tab').setAttribute('aria-pressed', String(quick));
+  $('pool-tab').setAttribute('aria-pressed', String(!quick));
+  $('picker-note').textContent = quick ? 'Tap a die to roll instantly.' : 'Tap dice to add them. Roll them all together.';
+  $('quantity-field').hidden = !quick;
+  $('pool-summary').hidden = quick;
+  $('quantity').value = state.quantity;
+  $('modifier').value = state.modifier;
+  $('clear-dice').setAttribute('aria-label', quick ? 'Reset to one d20 with no modifier' : 'Clear the dice pool and modifier');
+  $('clear-dice').lastElementChild.textContent = quick ? 'Reset' : 'Clear';
+  document.querySelectorAll('[data-die]').forEach(button => {
+    const sides = Number(button.dataset.die);
+    const count = quick ? (state.sides === sides ? state.quantity : 0) : (state.pool || []).filter(t=>t.sides === sides).reduce((sum,t)=>sum+t.count,0);
+    button.classList.toggle('selected', count > 0);
+    button.setAttribute('aria-label', quick ? `Roll ${state.quantity} d${sides}${state.modifier ? ' with modifier ' + state.modifier : ''}` : `Add a d${sides}; ${count} selected`);
+    button.querySelector('.die-count').hidden = !count || (quick && count === 1);
+    button.querySelector('.die-count').textContent = count;
+  });
+  $('pool-summary').replaceChildren();
+  if (!quick) {
+    if (!state.pool?.length) { const p = document.createElement('span'); p.className = 'empty-pool'; p.textContent = 'An empty table. A world of possibility.'; $('pool-summary').append(p); }
+    (state.pool || []).forEach((term, i) => {
+      const chip = document.createElement('div'); chip.className = 'pool-chip';
+      const label = document.createElement('span'); label.textContent = termText(term);
+      const remove = document.createElement('button'); remove.type = 'button'; remove.textContent = '−'; remove.disabled = state.busy;
+      remove.setAttribute('aria-label', `Remove one die from ${termText(term)}`);
+      remove.onclick = () => {
+        if (--term.count === 0) state.pool.splice(i,1);
+        else if (term.keepCount > term.count) term.keepCount = term.count;
+        if (!canAdvantage()) state.advantage = 'normal'; renderControls();
+      };
+      chip.append(label,remove); $('pool-summary').append(chip);
+    });
+  }
+  document.querySelectorAll('[data-adv]').forEach(button => {
+    button.disabled = state.busy || (!advAllowed && button.dataset.adv !== 'normal');
+    button.setAttribute('aria-pressed', String(state.advantage === button.dataset.adv));
+  });
+  $('option-note').textContent = !advAllowed ? 'Select one d20 to use advantage or disadvantage.' : state.advantage === 'advantage' ? 'Roll two d20s. Keep the higher.' : state.advantage === 'disadvantage' ? 'Roll two d20s. Keep the lower.' : 'One d20. Endless possibilities.';
+  $('roll-label').textContent = state.busy ? 'Rolling…' : spec.terms.length ? 'Roll ' + formatSpec(spec) : 'Choose your dice';
+  $('roll-button').disabled = state.busy || !spec.terms.length;
+  $('roll-button').title = spec.terms.length ? 'Roll ' + formatSpec(spec) : 'Add dice to your pool';
+  document.querySelector('[data-step="quantity:-1"]').disabled = state.busy || state.quantity <= 1;
+  document.querySelector('[data-step="quantity:1"]').disabled = state.busy || state.quantity >= MAX_DICE;
+}
+
+$('quick-tab').onclick = () => { state.selection = 'quick'; if (!canAdvantage()) state.advantage = 'normal'; renderControls(); };
+$('pool-tab').onclick = () => {
+  if (state.pool === null) state.pool = [{count:state.quantity, sides:state.sides}];
+  state.selection = 'pool'; if (!canAdvantage()) state.advantage = 'normal'; renderControls();
+};
+function readNumeric(id, delta = 0) {
+  const input = $(id);
+  let number = Number(input.value);
+  if (!input.value.trim() || !Number.isFinite(number)) number = id === 'quantity' ? 1 : 0;
+  number = Math.max(Number(input.min), Math.min(Number(input.max), Math.trunc(number) + delta));
+  state[id] = number; input.value = number;
+  if (!canAdvantage()) state.advantage = 'normal'; renderControls();
+}
+document.querySelectorAll('[data-step]').forEach(button => button.onclick = () => { const [id, amount] = button.dataset.step.split(':'); readNumeric(id, Number(amount)); });
+['quantity','modifier'].forEach(id => $(id).addEventListener('change',()=>readNumeric(id)));
+document.querySelectorAll('[data-adv]').forEach(button => button.onclick = () => { state.advantage = button.dataset.adv; renderControls(); });
+$('roll-button').onclick = () => { readNumeric('quantity'); readNumeric('modifier'); roll(currentSpec()); };
+$('formula-form').onsubmit = event => {
+  event.preventDefault();
+  if (state.busy) return;
+  try {
+    const spec = parseExpression($('formula').value);
+    $('formula-error').hidden = true; $('formula').removeAttribute('aria-invalid'); applySpec(spec); roll(spec);
+  } catch (error) { $('formula-error').textContent = error.message; $('formula-error').hidden = false; $('formula').setAttribute('aria-invalid','true'); }
+};
+$('formula').addEventListener('input',()=>{ $('formula-error').hidden = true; $('formula').removeAttribute('aria-invalid'); });
+document.querySelectorAll('[data-preset]').forEach(button => button.onclick = () => { const spec = parseExpression(button.dataset.preset); applySpec(spec); roll(spec); });
+
+function breakdown(result) {
+  return result.groups.map(group => group.values.map((value,i)=>group.kept[i] ? String(value) : `(${value} dropped)`).join(' + ')).join(' + ') + (result.spec.modifier ? ` ${result.spec.modifier > 0 ? '+' : '−'} ${Math.abs(result.spec.modifier)}` : '');
+}
+function resultText(result) { return `${result.formula} = ${result.total} · ${breakdown(result)}${result.natural === 20 ? ' · Natural 20' : result.natural === 1 ? ' · Natural 1' : ''}`; }
+
+function renderHistory() {
+  $('history-count').textContent = state.history.length;
+  $('clear-history').disabled = !state.history.length;
+  $('history-list').replaceChildren();
+  if (!state.history.length) {
+    const empty = document.createElement('div'); empty.className = 'history-empty'; empty.append(makeIcon('d20'));
+    const body = document.createElement('div'); const title = document.createElement('strong'); title.textContent = 'A new chapter awaits.';
+    const p = document.createElement('p'); p.textContent = 'Your rolls will find a home here.'; body.append(title,p); empty.append(body); $('history-list').append(empty);
+  }
+  state.history.forEach(item => {
+    const row = document.createElement('button'); row.type = 'button'; row.className = 'history-row'; row.disabled = state.busy;
+    if (item.natural === 20) row.classList.add('nat20'); if (item.natural === 1) row.classList.add('nat1');
+    row.setAttribute('aria-label', `${resultText(item)}. Click to reroll.`);
+    row.title = resultText(item);
+    row.append(makeIcon('d' + (item.spec.terms.length === 1 ? item.spec.terms[0].sides : 20),'history-icon'));
+    const main = document.createElement('span'); main.className = 'history-main';
+    const expression = document.createElement('span'); expression.className = 'history-expression'; expression.textContent = item.formula;
+    const detail = document.createElement('span'); detail.className = 'history-breakdown'; detail.textContent = (item.natural === 20 ? 'Natural 20 · ' : item.natural === 1 ? 'Natural 1 · ' : '') + breakdown(item);
+    main.append(expression,detail);
+    const time = document.createElement('time'); time.className = 'history-time'; time.dateTime = new Date(item.timestamp).toISOString();
+    time.textContent = new Date(item.timestamp).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}); time.title = new Date(item.timestamp).toLocaleString();
+    const total = document.createElement('span'); total.className = 'history-total'; total.textContent = item.total;
+    row.append(main,time,total);
+    row.onclick = () => { if (!state.busy) { applySpec(item.spec); roll(item.spec); } };
+    $('history-list').append(row);
+  });
+  $('storage-note').textContent = canStore ? 'Your last 50 rolls, saved in this browser.' : 'History is available for this session only.';
+}
+$('clear-history').onclick = () => { undoHistory = [...state.history]; state.history = []; renderHistory(); save(); toast('The chronicle is cleared.',true); };
+$('copy-result').onclick = async () => {
+  if (!state.last) return;
+  const value = resultText(state.last);
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error('Use fallback');
+    await navigator.clipboard.writeText(value); toast('Copied. Share your fate.');
+  } catch (_) {
+    const field = document.createElement('textarea'); field.value = value; field.setAttribute('readonly',''); field.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.append(field); field.select();
+    let success = false; try { success = document.execCommand('copy'); } catch (_) {}
+    field.remove(); $('copy-result').focus(); toast(success ? 'Copied. Share your fate.' : 'Copy is unavailable here. You can select the displayed result.');
+  }
+};
+$('help-button').onclick = () => $('help-dialog').showModal();
+$('close-help').onclick = () => $('help-dialog').close();
+$('help-dialog').addEventListener('click',event=>{ const box = $('help-dialog').getBoundingClientRect(); if (event.target === $('help-dialog') && (event.clientX<box.left || event.clientX>box.right || event.clientY<box.top || event.clientY>box.bottom)) $('help-dialog').close(); });
+document.addEventListener('keydown', event => {
+  if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || $('help-dialog').open || /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName) || event.target.isContentEditable) return;
+  if (event.code === 'Space' && event.target.closest('button')) return;
+  if (event.code === 'Space' || event.key.toLowerCase() === 'r') { event.preventDefault(); if (!state.busy) roll(currentSpec()); }
+  if (/^[1-7]$/.test(event.key) && !state.busy) { event.preventDefault(); chooseDie(SIDES[Number(event.key)-1],true); }
+});
+
+// All audio is synthesized locally; no sound files or downloads are needed.
+let audioContext = null, soundTimers = [];
+function audioReady() {
+  if (!state.sound) return;
+  try {
+    if (!audioContext) { const Context = window.AudioContext || window.webkitAudioContext; if (Context) audioContext = new Context(); }
+    if (audioContext?.state === 'suspended') audioContext.resume().catch(()=>{});
+  } catch (_) { audioContext = null; }
+}
+function tickSound(strength = 1) {
+  if (!state.sound || !audioContext || audioContext.state !== 'running') return;
+  const time = audioContext.currentTime, duration = .065;
+  const buffer = audioContext.createBuffer(1, Math.ceil(audioContext.sampleRate * duration), audioContext.sampleRate);
+  const channel = buffer.getChannelData(0);
+  for (let i = 0; i < channel.length; i++) channel[i] = (Math.random()*2-1) * Math.exp(-i/(channel.length*.17));
+  const source = audioContext.createBufferSource(); source.buffer = buffer;
+  const filter = audioContext.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 1000 + strength*1500;
+  const gain = audioContext.createGain(); gain.gain.value = .16 * strength;
+  source.connect(filter); filter.connect(gain); gain.connect(audioContext.destination); source.start(time);
+  source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); };
+}
+function chime() {
+  if (!state.sound || !audioContext || audioContext.state !== 'running') return;
+  [523.25,659.25,783.99].forEach((frequency,index)=>{
+    const oscillator = audioContext.createOscillator(), gain = audioContext.createGain();
+    const time = audioContext.currentTime + index*.085;
+    oscillator.type = 'sine'; oscillator.frequency.value = frequency;
+    gain.gain.setValueAtTime(0,time); gain.gain.linearRampToValueAtTime(.055,time+.02); gain.gain.exponentialRampToValueAtTime(.001,time+.6);
+    oscillator.connect(gain); gain.connect(audioContext.destination); oscillator.start(time); oscillator.stop(time+.65);
+    oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+  });
+}
+function syncPreferences() {
+  const theme = THEMES[state.color];
+  document.documentElement.style.setProperty('--accent',theme.hex);
+  document.documentElement.style.setProperty('--accent-rgb',theme.rgb.join(','));
+  document.body.classList.toggle('reduced-motion',state.reduced);
+  $('sound-toggle').setAttribute('aria-pressed',String(state.sound));
+  $('sound-toggle').setAttribute('aria-label',state.sound ? 'Disable dice sounds' : 'Enable dice sounds');
+  $('sound-toggle').title = state.sound ? 'Sound on' : 'Sound off';
+  $('sound-toggle').querySelector('use').setAttribute('href',state.sound ? '#i-sound' : '#i-mute');
+  $('motion-toggle').setAttribute('aria-pressed',String(state.reduced));
+  $('motion-toggle').setAttribute('aria-label',state.reduced ? 'Enable full animation' : 'Enable reduced motion');
+  $('motion-toggle').title = state.reduced ? 'Reduced motion' : 'Full animation';
+  document.querySelectorAll('[data-color]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.color === state.color)));
+}
+$('sound-toggle').onclick = () => { state.sound = !state.sound; audioReady(); syncPreferences(); save(); if (state.sound) tickSound(.5); };
+$('motion-toggle').onclick = () => { state.reduced = !state.reduced; syncPreferences(); save(); wake(); };
+mediaMotion.addEventListener?.('change',event=>{ state.reduced = event.matches; syncPreferences(); save(); wake(); });
+document.querySelectorAll('[data-color]').forEach(button=>button.onclick=()=>{ state.color = button.dataset.color; syncPreferences(); save(); wake(); });
+
+// A small software 3D renderer: actual polyhedra, perspective and face labels.
+// Random outcomes are independent of this decorative animation.
+const V = {
+  add:(a,b)=>a.map((x,i)=>x+b[i]), sub:(a,b)=>a.map((x,i)=>x-b[i]), scale:(v,s)=>v.map(x=>x*s),
+  dot:(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0), cross:(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],
+  norm:v=>{const n=Math.hypot(...v);return n ? v.map(x=>x/n):[0,0,0];}
+};
+function quat(axis,angle) { const a=V.norm(axis),s=Math.sin(angle/2); return [a[0]*s,a[1]*s,a[2]*s,Math.cos(angle/2)]; }
+function qmul(a,b) { return [a[3]*b[0]+a[0]*b[3]+a[1]*b[2]-a[2]*b[1],a[3]*b[1]-a[0]*b[2]+a[1]*b[3]+a[2]*b[0],a[3]*b[2]+a[0]*b[1]-a[1]*b[0]+a[2]*b[3],a[3]*b[3]-a[0]*b[0]-a[1]*b[1]-a[2]*b[2]]; }
+function rotate(v,q) { const u=q.slice(0,3);return V.add(v,V.scale(V.cross(u,V.add(V.cross(u,v),V.scale(v,q[3]))),2)); }
+function align(normal) {
+  const z=[0,0,1],d=V.dot(normal,z);
+  if(d<-.999999) return quat([1,0,0],Math.PI);
+  const c=V.cross(normal,z),q=[...c,1+d],length=Math.hypot(...q);return q.map(x=>x/length);
+}
+function convexMesh(raw) {
+  const max=Math.max(...raw.map(v=>Math.hypot(...v))), vertices=raw.map(v=>V.scale(v,1/max));
+  const faces=[],seen=new Set(),epsilon=1e-6;
+  for(let i=0;i<vertices.length-2;i++)for(let j=i+1;j<vertices.length-1;j++)for(let k=j+1;k<vertices.length;k++){
+    let normal=V.norm(V.cross(V.sub(vertices[j],vertices[i]),V.sub(vertices[k],vertices[i])));
+    if(Math.hypot(...normal)<.1)continue;
+    const distances=vertices.map(v=>V.dot(normal,V.sub(v,vertices[i])));
+    if(distances.some(d=>d>epsilon)&&distances.some(d=>d<-epsilon))continue;
+    const ids=distances.flatMap((d,index)=>Math.abs(d)<epsilon?[index]:[]),key=ids.join(',');
+    if(seen.has(key))continue;seen.add(key);
+    const center=V.scale(ids.reduce((sum,id)=>V.add(sum,vertices[id]),[0,0,0]),1/ids.length);
+    if(V.dot(normal,center)<0)normal=V.scale(normal,-1);
+    const reference=Math.abs(normal[1])>.92?[0,0,1]:[0,1,0];
+    const u=V.norm(V.cross(reference,normal)),v=V.cross(normal,u);
+    ids.sort((a,b)=>Math.atan2(V.dot(V.sub(vertices[a],center),v),V.dot(V.sub(vertices[a],center),u))-Math.atan2(V.dot(V.sub(vertices[b],center),v),V.dot(V.sub(vertices[b],center),u)));
+    faces.push({ids,center,normal,u,v});
+  }
+  return {vertices,faces};
+}
+const PHI=(1+Math.sqrt(5))/2;
+const meshes={};
+meshes[4]=convexMesh([[1,1,1],[-1,-1,1],[-1,1,-1],[1,-1,-1]]);
+meshes[6]=convexMesh([-1,1].flatMap(x=>[-1,1].flatMap(y=>[-1,1].map(z=>[x,y,z]))));
+meshes[8]=convexMesh([[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]);
+const ringHeight=.15,tipHeight=ringHeight*(1+Math.cos(Math.PI/5))/(1-Math.cos(Math.PI/5));
+meshes[10]=convexMesh([[0,0,tipHeight],[0,0,-tipHeight],...Array.from({length:10},(_,i)=>[Math.cos(i*Math.PI/5),Math.sin(i*Math.PI/5),i%2?ringHeight:-ringHeight])]);
+const ico=[],dode=[...[-1,1].flatMap(x=>[-1,1].flatMap(y=>[-1,1].map(z=>[x,y,z])))];
+for(const a of [-1,1])for(const b of [-1,1]){
+  ico.push([0,a,b*PHI],[a,b*PHI,0],[b*PHI,0,a]);
+  dode.push([0,a/PHI,b*PHI],[a/PHI,b*PHI,0],[b*PHI,0,a/PHI]);
+}
+meshes[12]=convexMesh(dode);meshes[20]=convexMesh(ico);
+const canvas=$('dice-canvas'),ctx=canvas.getContext('2d');
+let viewW=700,viewH=466,scene=[],active=null,particles=[],raf=0,lastFrame=0;
+
+function sceneDie(sides,value,kept,index,part=null) {
+  const mesh=meshes[sides],faceIndex=part?value:value-1,face=mesh.faces[faceIndex];
+  let final=align(face.normal);
+  const baseline=rotate(face.u,final),angle=-Math.atan2(baseline[1],baseline[0]);
+  final=qmul(quat([0,0,1],angle+((index%3)-1)*.065),final);
+  return {mesh,sides,value,kept,part,faceIndex,final,seed:Math.random()*Math.PI*2,index};
+}
+function makeScene(result) {
+  const dice=[];
+  result.groups.forEach(group=>group.values.forEach((value,i)=>{
+    if(group.term.sides===100){
+      dice.push(sceneDie(10,Math.floor((value%100)/10),group.kept[i],dice.length,'tens'));
+      dice.push(sceneDie(10,value%10,group.kept[i],dice.length,'units'));
+    }else dice.push(sceneDie(group.term.sides,value,group.kept[i],dice.length));
+  }));
+  scene=dice;
+}
+function layoutDice() {
+  const n=scene.length,w=viewW-56,h=Math.min(230,viewH*.51);
+  let cols=n<=3?n:n<=6?3:n<=12?4:Math.ceil(Math.sqrt(n*w/h));
+  cols=Math.max(1,Math.min(n,cols));
+  const rows=Math.ceil(n/cols),cw=w/cols,ch=h/rows;
+  const radius=Math.min(cw*.37,ch*.42,n===1?105:83);
+  return scene.map((die,i)=>{
+    const row=Math.floor(i/cols),items=Math.min(cols,n-row*cols),column=i%cols;
+    return {x:viewW/2+(column-(items-1)/2)*cw,y:67+h/2+(row-(rows-1)/2)*ch,r:radius};
+  });
+}
+function resizeCanvas() {
+  const rect=canvas.getBoundingClientRect();viewW=rect.width;viewH=rect.height;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=Math.round(viewW*dpr);canvas.height=Math.round(viewH*dpr);
+  if(ctx)ctx.setTransform(dpr,0,0,dpr,0,0);wake();
+}
+function project(v,x,y,r) { const f=3.2/(4-v[2]);return {x:x+v[0]*f*r,y:y-v[1]*f*r}; }
+function rgb(a){return `rgb(${a.map(x=>Math.round(Math.max(0,Math.min(255,x)))).join(',')})`;}
+function blend(a,b,t){return a.map((x,i)=>x*(1-t)+b[i]*t);}
+
+function drawSigil(time) {
+  const x=viewW/2,y=67+Math.min(230,viewH*.51)/2,r=Math.min(146,viewW*.32,viewH*.32),accent=THEMES[state.color].rgb;
+  ctx.save();ctx.translate(x,y);ctx.strokeStyle=`rgba(${accent},.095)`;ctx.lineWidth=1;
+  [r,r-7,r*.76].forEach(radius=>{ctx.beginPath();ctx.arc(0,0,radius,0,Math.PI*2);ctx.stroke();});
+  const drift=state.reduced?0:time*.000012;
+  ctx.rotate(drift);
+  for(let i=0;i<48;i++){
+    const a=i*Math.PI/24,major=i%4===0;
+    ctx.beginPath();ctx.moveTo(Math.cos(a)*(r-8),Math.sin(a)*(r-8));ctx.lineTo(Math.cos(a)*(r-(major?17:12)),Math.sin(a)*(r-(major?17:12)));ctx.stroke();
+  }
+  for(let j=0;j<2;j++){
+    ctx.beginPath();for(let i=0;i<3;i++){const a=i*Math.PI*2/3+j*Math.PI-Math.PI/2;const px=Math.cos(a)*r*.76,py=Math.sin(a)*r*.76;i?ctx.lineTo(px,py):ctx.moveTo(px,py);}ctx.closePath();ctx.stroke();
+  }
+  ctx.rotate(-drift);
+  ctx.fillStyle=`rgba(${accent},.18)`;
+  for(let i=0;i<4;i++){
+    const a=i*Math.PI/2,px=Math.cos(a)*(r+10),py=Math.sin(a)*(r+10);
+    ctx.save();ctx.translate(px,py);ctx.rotate(Math.PI/4);ctx.fillRect(-2,-2,4,4);ctx.restore();
+  }
+  ctx.restore();
+}
+
+function drawDie(die,target,progress,time) {
+  let {x,y,r}=target;
+  const moving=progress<1;
+  const remain=1-progress;
+  let q=die.final,air=0;
+  if(moving){
+    x+=Math.sin(die.seed+progress*9)*Math.min(viewW*.25,170)*Math.pow(remain,1.6);
+    air=Math.abs(Math.sin(progress*Math.PI*(3.4+die.index%3)+.8))*90*remain;
+    y-=air;
+    q=qmul(quat([.6,1,.25],remain*(Math.PI*6+die.index*.3)),die.final);
+    q=qmul(quat([0,0,1],Math.sin(progress*11+die.seed)*remain*2),q);
+  }else if(!state.last&&!state.reduced){
+    y+=Math.sin(time*.0013)*6;
+    q=qmul(quat([0,1,0],Math.sin(time*.0006)*.15),q);
+  }
+  const theme=THEMES[state.color],accent=die.kept?theme.rgb:[123,111,137],base=die.kept?theme.base:[41,36,48];
+  ctx.save();
+  // Soft pool of light under each die, then a grounded contact shadow.
+  let glow=ctx.createRadialGradient(x,target.y+r*.24,0,x,target.y+r*.24,r*1.55);
+  glow.addColorStop(0,`rgba(${accent},${die.kept ? .095 : .025})`);glow.addColorStop(1,`rgba(${accent},0)`);
+  ctx.fillStyle=glow;ctx.fillRect(x-r*1.55,target.y-r*1.31,r*3.1,r*3.1);
+  ctx.beginPath();ctx.ellipse(x,target.y+r*.68,r*.67*(1-air/220),r*.13,0,0,Math.PI*2);ctx.fillStyle=`rgba(0,0,0,${.3-air/500})`;ctx.fill();
+  const verts=die.mesh.vertices.map(v=>rotate(v,q));
+  const light=V.norm([-.6,.9,2]);
+  const faces=die.mesh.faces.map((face,i)=>({face,i,normal:rotate(face.normal,q),center:rotate(face.center,q)}))
+    .filter(f=>V.dot(f.normal,V.sub([0,0,4],f.center))>0)
+    .sort((a,b)=>a.center[2]-b.center[2]);
+  for(const item of faces){
+    const {face,normal,center,i}=item,points=face.ids.map(id=>project(verts[id],x,y,r));
+    ctx.beginPath();points.forEach((p,j)=>j?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();
+    const brightness=Math.max(0,V.dot(normal,light));
+    const color=blend(base,accent,.06+brightness*.20+(i===die.faceIndex ? .055 : 0));
+    const fill=ctx.createLinearGradient(x-r,y-r,x+r,y+r);
+    fill.addColorStop(0,rgb(color.map(c=>c+9)));fill.addColorStop(1,rgb(color.map(c=>c-8)));
+    ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=`rgba(${accent},${.18+brightness*.39})`;ctx.lineWidth=r>55?1.15:.8;ctx.lineJoin='round';ctx.stroke();
+    if(r<18&&i!==die.faceIndex)continue;
+    const c=project(center,x,y,r),u=rotate(face.u,q),v=rotate(face.v,q);
+    const pu=project(V.add(center,V.scale(u,.1)),x,y,r),pv=project(V.add(center,V.scale(v,.1)),x,y,r);
+    let label=die.part==='tens'?String(i*10).padStart(2,'0'):die.part==='units'?String(i):String(i+1);
+    const fontSize=die.sides===4?60:die.sides===6?60:die.sides===8?48:die.sides===10?46:die.sides===12?43:37;
+    ctx.save();ctx.clip();ctx.transform((pu.x-c.x)/10,(pu.y-c.y)/10,-(pv.x-c.x)/10,-(pv.y-c.y)/10,c.x,c.y);
+    ctx.font=`500 ${fontSize}px Georgia,serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=rgb(blend(accent,[255,248,235],.76));
+    ctx.globalAlpha=die.kept ? .9 : .38;ctx.fillText(label,0,1);
+    if(label==='6'||label==='9'){ctx.fillRect(-5,fontSize*.42,10,1.7);}
+    ctx.restore();
+  }
+  if(!moving){
+    const label=die.part?die.part.toUpperCase():`d${die.sides}`;
+    ctx.font=`${r<25?8:10}px system-ui,sans-serif`;ctx.textAlign='center';ctx.fillStyle=die.kept?'#a99eb6':'#72677e';ctx.globalAlpha=.8;
+    ctx.fillText(label+(die.kept?'':' · dropped'),x,target.y+r*.9+15);ctx.globalAlpha=1;
+  }
+  ctx.restore();
+}
+function sparkBurst(natural) {
+  if(state.reduced)return;
+  const color=natural===20?[221,186,124]:THEMES[state.color].rgb;
+  const count=natural===20?70:22,cx=viewW/2,cy=67+Math.min(230,viewH*.51)/2;
+  particles=Array.from({length:count},()=>{const angle=Math.random()*Math.PI*2,speed=35+Math.random()*125;return {x:cx,y:cy,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,size:1+Math.random()*1.8,color,born:performance.now()};});
+}
+function drawParticles(time) {
+  particles=particles.filter(p=>time-p.born<1100);
+  particles.forEach(p=>{const t=(time-p.born)/1000,alpha=Math.max(0,1-t/1.1);ctx.fillStyle=`rgba(${p.color},${alpha*.65})`;ctx.beginPath();ctx.arc(p.x+p.vx*t,p.y+p.vy*t+35*t*t,p.size*alpha,0,Math.PI*2);ctx.fill();});
+}
+function frame(time) {
+  raf=0;
+  if(document.hidden)return;
+  if(!ctx){ if(active){const done=active.done;active=null;done();} return; }
+  if(!active && !state.reduced && time-lastFrame<32){raf=requestAnimationFrame(frame);return;}
+  lastFrame=time;
+  const progress=active?(state.reduced?1:Math.min(1,(time-active.start)/active.duration)):1;
+  if(active)$('rolling-progress').style.transform=`scaleX(${progress})`;
+  ctx.clearRect(0,0,viewW,viewH);drawSigil(time);
+  const layout=layoutDice();scene.forEach((die,i)=>drawDie(die,layout[i],progress,time));
+  drawParticles(time);
+  if(active&&progress>=1){const done=active.done;active=null;done();}
+  if(active||particles.length||(!state.reduced&&!state.last))raf=requestAnimationFrame(frame);
+}
+function wake(){if(!raf)raf=requestAnimationFrame(frame);}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)wake();});
+if(window.ResizeObserver)new ResizeObserver(resizeCanvas).observe(canvas);else window.addEventListener('resize',resizeCanvas);
+
+function showResult(result) {
+  $('result-caption').textContent=result.formula+' · TOTAL';
+  $('result-caption').title=result.formula;
+  $('result-value').textContent=result.total;
+  $('result-value').className='result-value'+(result.natural===20?' natural20':result.natural===1?' natural1':'');
+  void $('result-value').offsetWidth;
+  $('result-value').classList.add('reveal');
+  $('result-detail').replaceChildren();
+  result.groups.forEach((group,gi)=>{
+    if(gi){const plus=document.createElement('span');plus.textContent='+';$('result-detail').append(plus);}
+    group.values.forEach((value,i)=>{
+      const face=document.createElement('span');face.className='face-result'+(group.kept[i]?'':' dropped');face.textContent=value;
+      face.title=`d${group.term.sides}: ${value}${group.kept[i]?' · kept':' · dropped'}`;
+      face.setAttribute('aria-label',face.title);$('result-detail').append(face);
+    });
+  });
+  if(result.spec.modifier){const mod=document.createElement('span');mod.className='mod-result';mod.textContent=`${result.spec.modifier>0?'+':'−'} ${Math.abs(result.spec.modifier)}`;$('result-detail').append(mod);}
+  $('natural-badge').hidden=result.natural!==1&&result.natural!==20;
+  $('natural-badge').textContent=result.natural===20?'✧  NATURAL 20  ✧':'NATURAL 1';
+  $('natural-badge').classList.toggle('low',result.natural===1);
+  const first=result.spec.terms[0];
+  $('table-hint').textContent=result.spec.terms.some(t=>t.sides===100)?'Percentile dice: 00 + 0 = 100.':first.keep&&result.spec.terms.length===1?`Kept the ${first.keep==='kh'?'highest':'lowest'} ${first.keepCount} of ${first.count} dice.`:'Every face has an equal chance. Every roll is a new story.';
+  $('copy-result').disabled=false;
+  $('roll-announcement').textContent=resultText(result);
+}
+
+function roll(spec) {
+  if(state.busy)return;
+  if(!spec.terms.length){toast('Choose a die to begin.');return;}
+  let result;
+  try { result=calculate(parseExpression(formatSpec(spec))); }
+  catch(error){toast(error.message);return;}
+  state.busy=true;
+  if (window.matchMedia('(max-width: 720px)').matches) {
+    const tableBounds = $('arena').getBoundingClientRect();
+    if (tableBounds.top < 0 || tableBounds.bottom > window.innerHeight) {
+      $('arena').scrollIntoView({behavior:state.reduced ? 'auto' : 'smooth',block:'center'});
+    }
+  }
+  renderControls();audioReady();
+  $('arena').classList.add('rolling');$('arena').setAttribute('aria-busy','true');
+  $('table-status').textContent='FATE IS IN MOTION';$('natural-badge').hidden=true;
+  $('result-caption').textContent=result.formula;
+  $('result-caption').title=result.formula;
+  $('result-value').className='result-value';$('result-value').textContent='···';
+  $('result-detail').textContent='A twist of chance…';$('copy-result').disabled=true;
+  $('roll-announcement').textContent='Rolling '+result.formula;
+  soundTimers.forEach(clearTimeout);soundTimers=[];
+  if(!state.reduced)[0,180,400,690,1020,1330].forEach((delay,i)=>soundTimers.push(setTimeout(()=>tickSound(1-i*.10),delay)));
+  makeScene(result);
+  active={start:performance.now(),duration:1650,done:()=>{
+    state.busy=false;state.last=result;
+    state.history.unshift(result);state.history=state.history.slice(0,50);
+    soundTimers.forEach(clearTimeout);soundTimers=[];
+    $('arena').classList.remove('rolling');$('arena').setAttribute('aria-busy','false');
+    $('table-status').textContent='FATE HAS SPOKEN';$('rolling-progress').style.transform='scaleX(0)';
+    showResult(result);renderHistory();renderControls();save();sparkBurst(result.natural);
+    tickSound(.6);if(result.natural===20)chime();
+  }};
+  wake();
+}
+
+syncPreferences();renderControls();renderHistory();
+scene=[sceneDie(20,20,true,0)];resizeCanvas();
+</script>
+</body>
+</html>
